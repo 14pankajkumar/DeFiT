@@ -15,6 +15,9 @@ function Home() {
                 document.getElementById("geoDataTime").innerHTML = "Time " + data.timestamp
                 document.getElementById("geoDataSpeed").innerHTML = "Speed " + data.coords.speed
                 document.getElementById("geoDataDistance").innerHTML = "Distance " + parseFloat(data.coords.speed / data.timestamp)
+                if (data.coords.speed > 1) {
+                    alert("Your speed was more than 1")
+                }
             },
             error => console.log(error),
             {
