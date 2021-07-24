@@ -12,9 +12,9 @@ function Home() {
                 console.log(data);
                 coordinates.push([data.coords.latitude, data.coords.longitude]);
                 window.localStorage.setItem("coordinates", JSON.stringify(coordinates));
-                document.getElementById("geoDataTime").innerHTML = "Time " + (((data.timestamp/1000)/60)/60) + "hrs"
-                document.getElementById("geoDataSpeed").innerHTML = "Speed " + (data.coords.speed)
-                document.getElementById("geoDataDistance").innerHTML = "Distance " + parseFloat(data.coords.speed / data.timestamp)
+                document.getElementById("geoDataTime").innerHTML = "Time " + (data.timestamp).toFixed(2)
+                document.getElementById("geoDataSpeed").innerHTML = "Speed " + (data.coords.speed).toFixed(2)
+                document.getElementById("geoDataDistance").innerHTML = "Distance " + parseFloat(data.coords.speed / data.timestamp).toFixed(2)
                 if (data.coords.speed > 1) {
                     alert("Your speed was more than 1")
                 }
