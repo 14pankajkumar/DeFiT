@@ -16,6 +16,8 @@ function SignIn() {
   
   portis.onLogin((walletAddress, email, reputation) => {
     console.log(walletAddress, email, reputation);
+    document.getElementById("walletAdd").innerHTML = "Wallet Address " + walletAddress;
+    document.getElementById("email").innerHTML = "Email " + email;
   });
 
   portis.isLoggedIn().then(({ error, result }) => {
@@ -35,8 +37,9 @@ function SignIn() {
           <button className="portis-button" onClick={() => portis.provider.enable()} >Log in to portis</button>
           <button className="logout-button" onClick={() => portis.logout()} >Log Out</button>
           <button className="portis-button" onClick={() => portis.showBitcoinWallet("m/49'/0'/0'/0/0")} >Show Bitcoin Wallet</button>
-          <button className="portis-button" onClick={() => portis.showPortis()} >Show Portis account</button>
-          
+          <button className="portis-button" onClick={() => portis.showPortis()} >Show Ethereum Wallet</button>
+          <h1 id="walletAdd" >Wallet Address</h1>
+          <h1 id="email" >Email</h1>
       </div>
   )
 }
