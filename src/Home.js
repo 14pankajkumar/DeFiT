@@ -12,8 +12,8 @@ function Home() {
                 console.log(data);
                 coordinates.push([data.coords.latitude, data.coords.longitude]);
                 window.localStorage.setItem("coordinates", JSON.stringify(coordinates));
-                document.getElementById("geoDataTime").innerHTML = "Time " + data.timestamp
-                document.getElementById("geoDataSpeed").innerHTML = "Speed " + data.coords.speed
+                document.getElementById("geoDataTime").innerHTML = "Time " + (((data.timestamp/1000)/60)/60) + "hrs"
+                document.getElementById("geoDataSpeed").innerHTML = "Speed " + (data.coords.speed)
                 document.getElementById("geoDataDistance").innerHTML = "Distance " + parseFloat(data.coords.speed / data.timestamp)
                 if (data.coords.speed > 1) {
                     alert("Your speed was more than 1")
