@@ -14,7 +14,7 @@ function Home() {
                 window.localStorage.setItem("coordinates", JSON.stringify(coordinates));
                 document.getElementById("geoDataTime").innerHTML = "Time " + data.timestamp
                 document.getElementById("geoDataSpeed").innerHTML = "Speed " + data.coords.speed
-                document.getElementById("geoDataDistance").innerHTML = "Distance " + parseFloat(data.coords.speed % data.timestamp)
+                document.getElementById("geoDataDistance").innerHTML = "Distance " + parseFloat(data.coords.speed / data.timestamp)
             },
             error => console.log(error),
             {
