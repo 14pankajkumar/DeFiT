@@ -34,9 +34,9 @@ function Home() {
             </h1>
             <button className="portis-button">Log into Google Fit</button>
             <Link to="/signinportis" className="portis-button">Go to Wallet</Link>
-            <h1 id="geoDataTime"></h1>
-            <h1 id="geoDataSpeed"></h1>
-            <h1 id="geoDataDistance"></h1>
+            <h1 id="geoDataTime">Time 0</h1>
+            <h1 id="geoDataSpeed">Speed 0</h1>
+            <h1 id="geoDataDistance">Distance 0</h1>
         </div>
     )
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import Portis from '@portis/web3';
-import Web3 from 'web3';
+// import Web3 from 'web3';
 import './App.css';
 import { Link } from 'react-router-dom';
 
