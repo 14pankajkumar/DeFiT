@@ -5,7 +5,7 @@ import './App.css';
 import { Link } from 'react-router-dom';
 
 function SignIn() {
-  const portis = new Portis('835530b2-c62e-4b03-86f0-5795ae704490', 'mainnet', {
+  const portis = new Portis('835530b2-c62e-4b03-86f0-5795ae704490', 'maticMumbai', {
     scope: ["email", "reputation"]
   })
   // const web3 = new Web3(portis.provider)
