@@ -1,7 +1,6 @@
 import React from 'react'
 import Portis from '@portis/web3';
 // import Web3 from 'web3';
-import './App.css';
 import { Link } from 'react-router-dom';
 
 function SignIn() {
@@ -16,7 +15,7 @@ function SignIn() {
   
   portis.onLogin((walletAddress, email, reputation) => {
     console.log(walletAddress, email, reputation);
-    document.getElementById("walletAdd").innerHTML = "Wallet Address " + walletAddress;
+    document.getElementById("walletAdd").innerHTML = "Wallet Address " + walletAddress; 
     document.getElementById("email").innerHTML = "Email " + email;
   });
 
