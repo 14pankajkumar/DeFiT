@@ -38,46 +38,41 @@ function Home() {
                 document.getElementById("geoDataTime").innerHTML = "Time " + data.timestamp;
                 document.getElementById("geoDataSpeed").innerHTML = "Speed " + data.coords.speed;
 
-                if (data.coords.speed > 2) {
-                    // SF initiaziled
-                    const sf = new SuperfluidSDK.Framework({
-                        web3: new Web3(portis.provider)
-                    })
-                    await sf.initialize()
+                // SF initiaziled
+                const sf = new SuperfluidSDK.Framework({
+                    web3: new Web3(portis.provider)
+                })
+                await sf.initialize()
 
-                    // create user
-                    // const walletAddress = await window.ethereum.request({
-                    //     method: 'eth_requestAccounts',
-                    //     params: [
-                    //     {
-                    //         eth_accounts: {}
-                    //     }
-                    //     ]
-                    // });
+                // create user
+                // const walletAddress = await window.ethereum.request({
+                //     method: 'eth_requestAccounts',
+                //     params: [
+                //     {
+                //         eth_accounts: {}
+                //     }
+                //     ]
+                // });
 
-                    const userBob = sf.user({
-                        address: "0xbd225264c591720369b98de561c4cbe01ddd2e14",
-                        token: "0x5D8B4C2554aeB7e86F387B4d6c00Ac33499Ed01f",
-                        // 0x5D8B4C2554aeB7e86F387B4d6c00Ac33499Ed01f fDAIx token
-                        //0xF2d68898557cCb2Cf4C10c3Ef2B034b2a69DAD00 original
-                    });
+                const userBob = sf.user({
+                    address: "0xbd225264c591720369b98de561c4cbe01ddd2e14",
+                    token: "0x5D8B4C2554aeB7e86F387B4d6c00Ac33499Ed01f",
+                    // 0x5D8B4C2554aeB7e86F387B4d6c00Ac33499Ed01f fDAIx token
+                    //0xF2d68898557cCb2Cf4C10c3Ef2B034b2a69DAD00 original
+                });
 
+                // setInterval(() => {
+                if (data.coords.speed > 1) {
                     await userBob.flow({
                         recipient: aliceAddress, // my recipientAcc
                         flowRate: '385802469135802'
                     });
+                } else {
                     await userBob.flow({
                         recipient: aliceAddress, // my recipientAcc
                         flowRate: '0'
                     });
                 }
-                
-                // await userBob.flow({
-                //     recipient: aliceAddress, // my recipientAcc
-                //     flowRate: '385802469135802'
-                // });
-                // setInterval(() => {
-                
                 // }, 1000)
             },
             error => console.log(error),
