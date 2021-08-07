@@ -138,13 +138,13 @@ function Home() {
     console.log(`Total flowed: ${totalFlowed} tokens`);
 
     // Streams are live
-    const interestEarnedIn2Seconds = flowRate * 2
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setCount(count + interestEarnedIn2Seconds);
-        }, 2000);
-        return () => clearTimeout(timer);
-    })
+    // const interestEarnedIn2Seconds = flowRate * 2
+    // useEffect(() => {
+    //     const timer = setTimeout(() => {
+    //         setCount(count + interestEarnedIn2Seconds);
+    //     }, 2000);
+    //     return () => clearTimeout(timer);
+    // })
 
     return (
         <div className="App">
