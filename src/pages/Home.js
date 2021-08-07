@@ -70,7 +70,7 @@ function Home() {
                 //     flowRate: "385802469135802"
                 //     });
 
-                if (data.coords.speed > 1) {
+                if (data.coords.speed > 5) {
                     await userBob.flow({
                         recipient: aliceAddress,
                         flowRate: "385802469135802"
