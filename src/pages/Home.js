@@ -9,6 +9,8 @@ const aliceAddress = "0x7D98112f0Cf86fADcF09EdDbbE1BEEe4381D394f"
 
 function Home() {
     const [wallet, setwallet] = useState()
+    const [speed, setSpeed] = useState()
+    const [data, setData] = useState()
 
     const myLocalPOANode = {
         nodeUrl: "https://matic-mumbai.chainstacklabs.com",
@@ -40,40 +42,13 @@ function Home() {
 
     const start = () => {
         navigator.geolocation.watchPosition(
-            async data => {
+            data => {
                 console.log(data);
+                setData(data)
                 coordinates.push([data.coords.latitude, data.coords.longitude]);
                 window.localStorage.setItem("coordinates", JSON.stringify(coordinates));
                 document.getElementById("geoDataTime").innerHTML = "Time " + data.timestamp;
-                document.getElementById("geoDataSpeed").innerHTML = "Speed " + data.coords.speed;
-
-                const sf = new SuperfluidSDK.Framework({
-                    web3: new Web3(portis.provider),
-                });
-                await sf.initialize()
-
-                const userBob = sf.user({
-                address: wallet, 
-                token: "0x5D8B4C2554aeB7e86F387B4d6c00Ac33499Ed01f" // address of the Super Token
-                });
-
-                await userBob.flow({
-                    recipient: aliceAddress,
-                    flowRate: "385802469135802"
-                    });
-
-                // if (data.coords.speed > 5) {
-                //     await userBob.flow({
-                //         recipient: aliceAddress,
-                //         flowRate: "385802469135802"
-                //         });
-                // } else {
-                //     await userBob.flow({
-                //         recipient: aliceAddress,
-                //         flowRate: "0"
-                //         });
-                // }
-                    
+                // document.getElementById("geoDataSpeed").innerHTML = "Speed " + data.coords.speed;
             },
             error => console.log(error),
             {
@@ -81,6 +56,43 @@ function Home() {
             }
         )
     }
+
+    const superFluidInit = async () => {
+        if (speed > 5) {
+            const sf = new SuperfluidSDK.Framework({
+                web3: new Web3(portis.provider),
+            });
+            await sf.initialize()
+    
+            const userBob = sf.user({
+            address: wallet, 
+            token: "0x5D8B4C2554aeB7e86F387B4d6c00Ac33499Ed01f" // address of the Super Token
+            });
+
+            await userBob.flow({
+                recipient: aliceAddress,
+                flowRate: "385802469135802"
+                });
+        } else {
+            const sf = new SuperfluidSDK.Framework({
+                web3: new Web3(portis.provider),
+            });
+            await sf.initialize()
+    
+            const userBob = sf.user({
+            address: wallet, 
+            token: "0x5D8B4C2554aeB7e86F387B4d6c00Ac33499Ed01f" // address of the Super Token
+            });
+
+            await userBob.flow({
+                recipient: aliceAddress,
+                flowRate: "0"
+                });
+        }
+        
+    }
+
+    superFluidInit()
 
     const stop = async() => {
         const sf = new SuperfluidSDK.Framework({
@@ -113,7 +125,14 @@ function Home() {
             <h3 id="">Email </h3>
             <p id="email"> </p>
             <h3 id="geoDataTime">Time 0</h3>
-            <h3 id="geoDataSpeed">Speed 0</h3>
+            <h3 id="geoDataSpeed">Speed {speed} k/h</h3>
+            <input 
+                value={speed}
+                onChange={(e) => setSpeed(e.target.value)}
+                style={{
+                    margin: 10
+                }}
+            />
             <Graph wallet={wallet} />
             </div>
         </div>
