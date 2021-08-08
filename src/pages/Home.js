@@ -10,6 +10,8 @@ const aliceAddress = "0x7D98112f0Cf86fADcF09EdDbbE1BEEe4381D394f"
 
 function Home() {
     const [count, setCount] = useState()
+    const [wallet, setwallet] = useState()
+    const [flow, setflow] = useState()
     const myLocalPOANode = {
         nodeUrl: "https://matic-mumbai.chainstacklabs.com",
         chainId: 80001,
@@ -20,6 +22,7 @@ function Home() {
     })
     
     portis.onLogin((walletAddress, email, reputation) => {
+        setwallet(walletAddress)
         console.log(walletAddress, email, reputation);
         document.getElementById("walletAdd").innerHTML = walletAddress; 
         document.getElementById("email").innerHTML = email;
@@ -50,38 +53,27 @@ function Home() {
                 });
                 await sf.initialize()
 
-                // const walletAddress = await window.ethereum.request({
-                //         method: 'eth_requestAccounts',
-                //         params: [
-                //         {
-                //             eth_accounts: {}
-                //         }
-                //         ]
-                //     });
-                        
-                // const bobAddress = walletAddress[0] // address of the sender's wallet
                 const userBob = sf.user({
-                address: bobAdd, 
+                address: wallet, 
                 token: "0x5D8B4C2554aeB7e86F387B4d6c00Ac33499Ed01f" // address of the Super Token
                 });
 
-                // await userBob.flow({
-                //     recipient: aliceAddress,
-                //     flowRate: "385802469135802"
-                //     });
+                await userBob.flow({
+                    recipient: aliceAddress,
+                    flowRate: "385802469135802" 
+                    });
 
-                if (data.coords.speed > 5) {
-                    await userBob.flow({
-                        recipient: aliceAddress,
-                        flowRate: "385802469135802"
-                        });
-                } else {
-                    await userBob.flow({
-                        recipient: aliceAddress,
-                        flowRate: "0"
-                        });
-                }
-                
+                // if (data.coords.speed > 5) {
+                //     await userBob.flow({
+                //         recipient: aliceAddress,
+                //         flowRate: "385802469135802" 
+                //         });
+                // } else {
+                //     await userBob.flow({
+                //         recipient: aliceAddress,
+                //         flowRate: "0"
+                //         });
+                // }
                     
             },
             error => console.log(error),
@@ -118,12 +110,15 @@ function Home() {
                 }
             )
             console.log(result.data);
+            setflow(result.data.account)
         } catch(error) {
             console.log(error);
         }
     }
 
-    main()
+    setInterval(() => {
+        main()
+    }, 2000)
     
     
     // calculating totals
@@ -146,10 +141,28 @@ function Home() {
     //     return () => clearTimeout(timer);
     // })
 
+    const stop = async() => {
+        const sf = new SuperfluidSDK.Framework({
+            web3: new Web3(portis.provider),
+        });
+        await sf.initialize()
+
+        const userBob = sf.user({
+        address: wallet, 
+        token: "0x5D8B4C2554aeB7e86F387B4d6c00Ac33499Ed01f" // address of the Super Token
+        });
+
+        await userBob.flow({
+            recipient: aliceAddress,
+            flowRate: "0" 
+            })
+        window.location.reload()
+    }
+
     return (
         <div className="App">
             <button onClick={() => start()} className="portis-button">Start Running</button>
-            <button className="portis-button" onClick={() => window.location.reload()} >Stop Running</button>
+            <button className="portis-button" onClick={() => stop()} >Stop Running</button>
             <button onClick={() => portis.provider.enable()} className="portis-button">Login to Wallet</button>
             <button onClick={() => portis.logout()} className="portis-button">Log Out</button>
             <div className="main">
@@ -159,6 +172,7 @@ function Home() {
             <p id="email"> </p>
             <h3 id="geoDataTime">Time 0</h3>
             <h3 id="geoDataSpeed">Speed 0</h3>
+            <h3 >Flow {flow} </h3>
             </div>
         </div>
     )
