@@ -65,11 +65,9 @@
 }
 
 .main {
-  margin-left: 30%;
-  margin-top: 30px;
+  margin: 20px;
   padding: 10px;
   height: 50%;
-  width: 518px;
   background-color: white;
   border-radius: 5px;
 }
